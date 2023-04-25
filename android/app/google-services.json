@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "515322724712",
+    "project_id": "haryanapolicedep-2cd60",
+    "storage_bucket": "haryanapolicedep-2cd60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515322724712:android:4eee6578c12052f6a296dd",
+        "android_client_info": {
+          "package_name": "com.example.haryana_police_department"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515322724712-nhh512p4vb2e07ju0gvo43l5vktidmss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGRwePOcNhxxyeb5Ce2SZHVNa4Vc18xG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515322724712-nhh512p4vb2e07ju0gvo43l5vktidmss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
