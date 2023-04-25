@@ -139,7 +139,7 @@ class _leaveState extends State<leave> {
                           padding: const EdgeInsets.only(left: 25, right: 25),
                           child: SizedBox(
                             height: 200,
-                              child: to_approve_2()
+                              child: to_approve()
                           ),
                         )
                       ]),
