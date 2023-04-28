@@ -16,18 +16,160 @@ class LeavesList {
 }
 
 class RestService{
-  static Future<List<LeavesList>> getData() async{
-    List<LeavesList> lst = [];
+  static Future<List<String>>  getUID() async {
+    final List<String> UIDs = [];
+    final collectionRef = FirebaseFirestore.instance.collection('leave_application');
+    final snapshot = await collectionRef.get();
+    final documents = snapshot.docs;
+    final myOIDa = await RestService.getOID();
+
+
+    for (final doc in documents) {
+      String status = doc.data()["status"].toString();
+      if(status == "pending" && doc.data()["approver_OID"].toString() == myOIDa!["oid"].toString()) {
+        UIDs.add(doc.data()["applicant_uid"].toString());
+      }
+    }
+    return UIDs;
+  }
+
+  static Future<List<String>>  getName() async {
+    final List<String> Names = [];
+    final collectionRef = FirebaseFirestore.instance.collection('users');
+    final snapshot = await collectionRef.get();
+    final documents = snapshot.docs;
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    final UIDs = await RestService.getUID();
+    Map<String, dynamic>? myOID;
+    print("object");
+    print(UIDs);
+    print("object");
+
+    for(int i = 0; i < UIDs.length;i++){
+      if (firebaseUser != null) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(UIDs[i].toString())
+            .get()
+            .then((ds) {
+          myOID = ds.data();
+        });
+      }
+      Names.add(myOID!["name"].toString());
+    }
+
+
+    // for (final doc in documents) {
+    //   // print(doc.data());
+    //   if(UIDs.contains(doc.data()["uid"].toString())){
+    //     Names.add(doc.data()["name"].toString());
+    //   }
+    // }
+    print(Names);
+    return Names;
+  }
+
+  static Future<List<String>>  getPosts() async {
+    final List<String> Posts = [];
+    final collectionRef = FirebaseFirestore.instance.collection('users');
+    final snapshot = await collectionRef.get();
+    final documents = snapshot.docs;
+    final myOIDa = await RestService.getOID();
+    final UIDs = await RestService.getUID();
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    Map<String, dynamic>? myOID;
+
+
+
+    for(int i = 0; i < UIDs.length;i++){
+      if (firebaseUser != null) {
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(UIDs[i].toString())
+            .get()
+            .then((ds) {
+          myOID = ds.data();
+        });
+      }
+      Posts.add(myOID!["post"].toString());
+    }
+
+    // for (final doc in documents) {
+    //   // print(doc.data());
+    //   if(UIDs.contains(doc.data()["uid"].toString())){
+    //     Posts.add(doc.data()["post"].toString());
+    //   }
+    // }
+    print(Posts);
+    return Posts;
+  }
+
+  static Future<List<String>>  getLeaves_ID() async {
+    final List<String> Leaves_ID = [];
+    final collectionRef = FirebaseFirestore.instance.collection('leave_application');
+    final snapshot = await collectionRef.get();
+    final documents = snapshot.docs;
+    final myOIDa = await RestService.getOID();
+    final UIDs = await RestService.getUID();
+
+
+
+    for (final doc in documents) {
+      // print(doc.data());
+      if(UIDs.contains(doc.data()["applicant_uid"].toString()) && doc.data()["status"].toString() == "pending"){
+        Leaves_ID.add(doc.data()["leave_id"].toString());
+      }
+    }
+    print(Leaves_ID);
+    return Leaves_ID;
+  }
+
+
+  // static Future<Map<String, dynamic>?> getUID() async{
+  //   Map<String, dynamic>? lst;
+  //   final firebaseUser = await FirebaseAuth.instance.currentUser!;
+  //   if (firebaseUser != null) {
+  //     await FirebaseFirestore.instance
+  //         .collection("leave_application")
+  //         .doc()
+  //         .get()
+  //         .then((ds) {
+  //       lst = ds.data();
+  //     });
+  //   }
+  //   print(lst);
+  //   return lst;
+  // }
+
+  static Future<Map<String, dynamic>?> getthisUID(leave_id) async{
+    Map<String, dynamic>? myOID;
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     if (firebaseUser != null) {
       await FirebaseFirestore.instance
           .collection("leave_application")
-          .doc("100001")
+          .doc(leave_id.toString())
           .get()
           .then((ds) {
-        lst = ds.data()! as List<LeavesList>;
+        myOID = ds.data();
       });
     }
-    return lst;
+    // print(myOID);
+    return myOID;
+  }
+
+  static Future<Map<String, dynamic>?> getOID() async{
+    Map<String, dynamic>? myOID;
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    if (firebaseUser != null) {
+      await FirebaseFirestore.instance
+          .collection("UIDtoOID")
+          .doc(firebaseUser.uid)
+          .get()
+          .then((ds) {
+        myOID = ds.data();
+      });
+    }
+    // print(myOID);
+    return myOID;
   }
 }

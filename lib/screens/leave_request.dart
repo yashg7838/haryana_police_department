@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
@@ -49,6 +51,9 @@ class _leave_requestState extends State<leave_request> {
 
   final TextEditingController _date = TextEditingController();
   final TextEditingController _date_2 = TextEditingController();
+  final TextEditingController reason = TextEditingController();
+
+
   List<String> items = [
     'Casual',
     'Sick Leave',
@@ -76,12 +81,15 @@ class _leave_requestState extends State<leave_request> {
                     const SizedBox(
                       width: 10,
                     ),
+
                     IconButton(
                         onPressed: (){
                           Navigator.pop(context);
                         }, icon: const Icon(Icons.arrow_back_ios_new,
                       color: Colors.black,)),
+
                     Expanded(child: Container(height: 5,)),
+
                     IconButton(
                         onPressed: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context) => notifications(),));
@@ -95,8 +103,10 @@ class _leave_requestState extends State<leave_request> {
                     )
                   ],
                 ), // Top icons
+
+
                 Container(
-                  padding: EdgeInsets.only(left:25),
+                  padding: const EdgeInsets.only(left:25),
                   child: const Text
                     ('Leave Request',style: TextStyle(
                     fontSize: 28,
@@ -104,6 +114,8 @@ class _leave_requestState extends State<leave_request> {
                   ),
                   ),
                 ), // text leave request
+
+
                 Container(
                   padding: const EdgeInsets.only(left:25,top: 20),
                   child: const Text
@@ -113,6 +125,8 @@ class _leave_requestState extends State<leave_request> {
                   ),
                   ),
                 ), // text type
+
+
                 Container(
                   padding: const EdgeInsets.only( left:25,top: 10,right: 25),
                   child: DropdownButtonFormField<String>(
@@ -156,6 +170,8 @@ class _leave_requestState extends State<leave_request> {
                     onChanged: (item) => setState(() => selecteditem=item),
                   ),
                 ), // drop-down box for type
+
+
                 Container(
                   padding: const EdgeInsets.only(left:25,top: 20),
                   child: const Text
@@ -165,12 +181,15 @@ class _leave_requestState extends State<leave_request> {
                   ),
                   ),
                 ), // text reason
+
+
                 Container(
                   width:  MediaQuery.of(context).size.width > 1020
                       ? 1020
                       : MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.only(top: 10,right:25.0,left:25.0),
                   child: TextFormField(
+                    controller: reason,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -205,6 +224,8 @@ class _leave_requestState extends State<leave_request> {
                     ),
                   ),
                 ), // text field reason
+
+
                 Container(
                   padding: const EdgeInsets.only(left:25,top: 20),
                   child: const Text
@@ -213,7 +234,9 @@ class _leave_requestState extends State<leave_request> {
                     fontWeight: FontWeight.bold,
                   ),
                   ),
-                ), // text date 1
+                ), // text date start
+
+
                 Padding(
                   padding: const EdgeInsets.only(top:10,right:25,left:25),
                   child: TextFormField(
@@ -264,6 +287,8 @@ class _leave_requestState extends State<leave_request> {
                     },
                   ),
                 ), // date selector 1
+
+
                 Container(
                   padding: const EdgeInsets.only(left:25,top: 20),
                   child: const Text
@@ -272,7 +297,9 @@ class _leave_requestState extends State<leave_request> {
                     fontWeight: FontWeight.bold,
                   ),
                   ),
-                ), // text date 2
+                ), // text date end
+
+
                 Padding(
                   padding: const EdgeInsets.only(top: 10,right: 25,left: 25),
                   child: TextFormField(
@@ -323,51 +350,53 @@ class _leave_requestState extends State<leave_request> {
                     },
                   ),
                 ), // date selector 2
-                Container(
-                  padding: const EdgeInsets.only(left:25,top: 20),
-                  child: const Text
-                    ('Document',style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  ),
-                ), // text document
-                Container(
-                  padding: const EdgeInsets.only(top: 10, left: 25, right: 25),
-                  child: Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Color(0xFFD9D9D9))
-                    ),
-                      child: isLoading
-                          ?const CircularProgressIndicator()
-                          :TextButton(
-                          onPressed: (){
-                            pickFile();
-                          },
-                          child: Row(
-                            children: const [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(Icons.cloud_upload_outlined, color: Color(0xFF682242)),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("UPLOAD DOCUMENT", style: TextStyle(color: Colors.grey),)
 
-                            ],
-                          ))
-                  )
-                ), // upload doc
 
-                if(pickedFile != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 35, right: 25, top: 15),
-                    child: Text('File uploaded: $_fileName'),
-                  ),
+                // Container(
+                //   padding: const EdgeInsets.only(left:25,top: 20),
+                //   child: const Text
+                //     ('Document',style: TextStyle(
+                //     fontSize: 18,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                //   ),
+                // ), // text document
+                // Container(
+                //   padding: const EdgeInsets.only(top: 10, left: 25, right: 25),
+                //   child: Container(
+                //     width: double.infinity,
+                //     height: 60,
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(16),
+                //       border: Border.all(color: Color(0xFFD9D9D9))
+                //     ),
+                //       child: isLoading
+                //           ?const CircularProgressIndicator()
+                //           :TextButton(
+                //           onPressed: (){
+                //             pickFile();
+                //           },
+                //           child: Row(
+                //             children: const [
+                //               SizedBox(
+                //                 width: 10,
+                //               ),
+                //               Icon(Icons.cloud_upload_outlined, color: Color(0xFF682242)),
+                //               SizedBox(
+                //                 width: 10,
+                //               ),
+                //               Text("UPLOAD DOCUMENT", style: TextStyle(color: Colors.grey),)
+                //
+                //             ],
+                //           ))
+                //   )
+                // ), // upload doc
+                //
+                // if(pickedFile != null)
+                //   Padding(
+                //     padding: const EdgeInsets.only(left: 35, right: 25, top: 15),
+                //     child: Text('File uploaded: $_fileName'),
+                //   ),
 
                 Padding (
                   padding: const EdgeInsets.only(top: 30,left: 25,right: 25),
@@ -375,9 +404,25 @@ class _leave_requestState extends State<leave_request> {
                     height: 50,
                     child: InkWell(
                       onTap: (){
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.pop(context);
-                        }
+                        // if (_formKey.currentState!.validate()) {
+                        //   final firebaseUser = FirebaseAuth.instance.currentUser!;
+                        //   final city = <String, String?>{
+                        //     "applicant_uid":firebaseUser.uid.toString(),
+                        //     "approver_OID":"",
+                        //     "leave_end":_date_2.toString(),
+                        //     "leave_start":_date.toString(),
+                        //     "leave_id":"",
+                        //     "leave_reason":reason.toString(),
+                        //     "leave_type":selecteditem,
+                        //     "status":"pending",
+                        //   };
+                        //
+                        //   FirebaseFirestore.instance
+                        //       .collection("cities")
+                        //       .doc("LA")
+                        //       .set(city)
+                        //       .onError((e, _) => print("Error writing document: $e"));
+                        // }
                       },
                       child: const rdn_button(
                         BtnName: "Apply leave",
