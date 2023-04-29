@@ -34,7 +34,9 @@ class to_approveState_2 extends State<to_approve_2> {
               alignment: Alignment.topRight,
               child: InkWell(
                 onTap: () {
-                  setState(() {});
+                  setState((){
+
+                  });
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -106,7 +108,10 @@ class to_approveState_2 extends State<to_approve_2> {
                         },
                       );
                     }
-                    return Container();
+                    return const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text("No pending leave requests"),
+                    );
                   },
                 ),
 

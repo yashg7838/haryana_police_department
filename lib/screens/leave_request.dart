@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
+import '../ui_helper/leaves.dart';
 import '../ui_helper/widgets/round_btn_1.dart';
 import 'notifications.dart';
 
@@ -404,26 +405,8 @@ class _leave_requestState extends State<leave_request> {
                     height: 50,
                     child: InkWell(
                       onTap: (){
-                        // if (_formKey.currentState!.validate()) {
-                        //   final firebaseUser = FirebaseAuth.instance.currentUser!;
-                        //   final city = <String, String?>{
-                        //     "applicant_uid":firebaseUser.uid.toString(),
-                        //     "approver_OID":"",
-                        //     "leave_end":_date_2.toString(),
-                        //     "leave_start":_date.toString(),
-                        //     "leave_id":"",
-                        //     "leave_reason":reason.toString(),
-                        //     "leave_type":selecteditem,
-                        //     "status":"pending",
-                        //   };
-                        //
-                        //   FirebaseFirestore.instance
-                        //       .collection("cities")
-                        //       .doc("LA")
-                        //       .set(city)
-                        //       .onError((e, _) => print("Error writing document: $e"));
-                        // }
-                      },
+                        _apply_leave();
+                        },
                       child: const rdn_button(
                         BtnName: "Apply leave",
                       ),
@@ -439,4 +422,32 @@ class _leave_requestState extends State<leave_request> {
         )
 
     );
-  }}
+  }
+
+  _apply_leave () async{
+    DateTime tempDate_end = DateFormat("yyyy-MM-dd").parse(_date_2.text);
+    Timestamp myTimeStamp_end = Timestamp.fromDate(tempDate_end);
+    // final leave_id = await RestService.getleaveid();
+    DateTime tempDate_start = DateFormat("yyyy-MM-dd").parse(_date.text);
+    Timestamp myTimeStamp_start = Timestamp.fromDate(tempDate_start);
+    final firebaseUser = FirebaseAuth.instance.currentUser!;
+    final senior = await RestService.getsoid(firebaseUser.uid.toString());
+    print(senior);
+    final city = <String, dynamic>{
+      "applicant_uid":firebaseUser.uid.toString(),
+      "approver_OID":senior,
+      "leave_end":myTimeStamp_end,
+      "leave_start":myTimeStamp_start,
+      "leave_id":"100006",
+      "leave_reason":reason.toString(),
+      "leave_type":selecteditem,
+      "status":"pending",
+    };
+
+    FirebaseFirestore.instance
+        .collection("leave_application")
+        .doc("100006")
+        .set(city)
+        .onError((e, _) => print("Error writing document: $e"));
+  }
+}

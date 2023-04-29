@@ -377,12 +377,12 @@ class to_approve_userState_2 extends State<to_approve_user_2> {
                                       ),
                                       InkWell(
                                         onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    transfer(emp_ind),
-                                              ));
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //       builder: (context) =>
+                                          //           transfer(emp_ind),
+                                          //     ));
                                         },
                                         child: Container(
                                           width: double.infinity,

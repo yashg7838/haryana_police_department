@@ -1,5 +1,5 @@
 // ignore_for_file: camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, duplicate_ignore
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +27,7 @@ class to_approve_userState extends State<to_approve_user> {
       this.leave_ind,);
   late Map<String, dynamic> myData;
   late final UIDs;
+  late final Leaves;
   late Map<String, dynamic> myUser;
 
 
@@ -109,8 +110,14 @@ class to_approve_userState extends State<to_approve_user> {
                                   return const Text("");
                                 }
                                 if(snapshot.hasData) {
-                                  String leaveStart = myData["leave_start"].toString();
-                                  String leaveEnd = myData["leave_end"].toString();
+                                  var leaveStart = (myData["leave_start"] as Timestamp).toDate();
+                                  var leaveStart2 = DateFormat('dd/MM/yyyy').format(leaveStart);
+                                  var leaveEnd = (myData["leave_end"] as Timestamp).toDate();
+                                  var leaveEnd2 = DateFormat('dd/MM/yyyy').format(leaveEnd);
+                                  var to = DateTime(leaveEnd.year, leaveEnd.month, leaveEnd.day);
+                                  var from = DateTime(leaveStart.year, leaveStart.month, leaveStart.day);
+                                  int period = (to.difference(from).inHours/24).round()+1;
+                                  print(period);
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 15, right: 15),
                                     child: Align(
@@ -139,7 +146,7 @@ class to_approve_userState extends State<to_approve_user> {
                                             const SizedBox(
                                               height: 4,
                                             ),
-                                            Text("$leaveStart to $leaveEnd", style: const TextStyle(fontSize: 16),),
+                                            Text("$leaveStart2 to $leaveEnd2", style: const TextStyle(fontSize: 16),),
                                             const SizedBox(
                                               height: 20,
                                             ),
@@ -159,6 +166,7 @@ class to_approve_userState extends State<to_approve_user> {
                                                             TextButton(
                                                                 onPressed: (){
                                                                   Navigator.pop(context);
+                                                                  _approve_leave(period);
                                                                   showDialog(
                                                                       context: context,
                                                                       builder: (context){
@@ -214,6 +222,7 @@ class to_approve_userState extends State<to_approve_user> {
                                                           actions: [
                                                             TextButton(
                                                                 onPressed: (){
+                                                                  _deny_leave();
                                                                   Navigator.pop(context);
                                                                   showDialog(
                                                                       context: context,
@@ -260,7 +269,7 @@ class to_approve_userState extends State<to_approve_user> {
                                             ),
                                             InkWell(
                                               onTap: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => transfer(myData[""]),));
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => transfer(leave_ind),)); //leave_ind
                                               },
                                               child: Container(
                                                 width: double.infinity,
@@ -326,5 +335,34 @@ class to_approve_userState extends State<to_approve_user> {
       });
     }
     return myUser;
+  }
+
+  _approve_leave(period) async{
+    Leaves = await RestService.getthisCLleaves(leave_ind);
+    int cl = Leaves["cl_used"];
+    num cl_update = cl + period;
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    if(firebaseUser != null){
+      await FirebaseFirestore.instance
+          .collection("leaves")
+          .doc(UIDs["applicant_uid"])
+          .update({"cl_used":cl_update});
+    }
+    if(firebaseUser != null){
+      await FirebaseFirestore.instance
+          .collection("leave_application")
+          .doc(leave_ind)
+          .update({"status":"approved"});
+    }
+  }
+
+  _deny_leave() async{
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    if(firebaseUser != null){
+      await FirebaseFirestore.instance
+          .collection("leave_application")
+          .doc(leave_ind)
+          .update({"status":"denied"});
+    }
   }
 }
