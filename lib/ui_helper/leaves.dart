@@ -115,8 +115,7 @@ class RestService{
 
 
     for (final doc in documents) {
-      // print(doc.data());
-      if(UIDs.contains(doc.data()["applicant_uid"].toString()) && doc.data()["status"].toString() == "pending"){
+      if(UIDs.contains(doc.data()["applicant_uid"].toString()) && doc.data()["status"].toString() == "pending" && doc.data()["approver_OID"].toString() == myOIDa!["oid"].toString()){
         Leaves_ID.add(doc.data()["leave_id"].toString());
       }
     }
@@ -172,7 +171,7 @@ class RestService{
     return myOID;
   }
 
-  static Future<Map<String, dynamic>?>  getleaveid() async {
+  static Future<List>  getleaveid() async {
     final List<String> Leaves_ID = [];
     final collectionRef = FirebaseFirestore.instance.collection('leave_application');
     print(collectionRef);
@@ -190,14 +189,7 @@ class RestService{
       print(doc.id.toString());
       leave_ids.add(doc.id.toString());
     }
-    int i = leave_ids.length-1;
-    print(i);
-    // String last_leave_id = leave_ids[i];
-    print(leave_ids[i]);
-    // var lastleave = int.parse(last_leave_id);
-    // assert(lastleave is int);
-    // print(leave_id.toString());
-    return myOIDa;
+    return leave_ids;
   }
 
   static Future<String> getsoid(userid) async{
@@ -212,7 +204,7 @@ class RestService{
         myOID = ds.data();
       });
     }
-    print(myOID);
+    // print(myOID);
     return myOID!["senior_oid"];
   }
 

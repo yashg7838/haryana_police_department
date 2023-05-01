@@ -427,26 +427,31 @@ class _leave_requestState extends State<leave_request> {
   _apply_leave () async{
     DateTime tempDate_end = DateFormat("yyyy-MM-dd").parse(_date_2.text);
     Timestamp myTimeStamp_end = Timestamp.fromDate(tempDate_end);
-    // final leave_id = await RestService.getleaveid();
+    final leave_id = await RestService.getleaveid();
+    print(leave_id);
+    int i = leave_id.length-1;
+    print(i);
+    int new_leave_id = int.parse(leave_id[i].toString())+1;
+    print(new_leave_id);
     DateTime tempDate_start = DateFormat("yyyy-MM-dd").parse(_date.text);
     Timestamp myTimeStamp_start = Timestamp.fromDate(tempDate_start);
     final firebaseUser = FirebaseAuth.instance.currentUser!;
     final senior = await RestService.getsoid(firebaseUser.uid.toString());
-    print(senior);
+    // print(senior);
     final city = <String, dynamic>{
       "applicant_uid":firebaseUser.uid.toString(),
       "approver_OID":senior,
       "leave_end":myTimeStamp_end,
       "leave_start":myTimeStamp_start,
-      "leave_id":"100006",
-      "leave_reason":reason.toString(),
+      "leave_id":new_leave_id,
+      "leave_reason":reason.text.toString(),
       "leave_type":selecteditem,
       "status":"pending",
     };
 
     FirebaseFirestore.instance
         .collection("leave_application")
-        .doc("100006")
+        .doc(new_leave_id.toString())
         .set(city)
         .onError((e, _) => print("Error writing document: $e"));
   }

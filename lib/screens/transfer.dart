@@ -14,7 +14,7 @@ class transfer extends StatefulWidget {
 
 class _transferState extends State<transfer> {
 
-  String leave_ind;
+  final String leave_ind;
   _transferState(this.leave_ind);
   final TextEditingController code = TextEditingController();
   late Map<String, dynamic> myData;
@@ -24,14 +24,6 @@ class _transferState extends State<transfer> {
 
 
   @override
-  var ID = ["1001","1002","1003","1004","1005","1006","1007","1008","1009"];
-  var firstName = ['Manoj',"Sanjeev","Vineet","Mane","Ramanujan","Gopal","Harendar","Vinesh","Raghav"];
-  var lastName = ['Kumar',"Singh","Sharma","Milind","Govinda","Chand","Kumar","Mittal","Singh"];
-  var position = ["ACP","SI Intelligence"];
-  var leaveType = ["Casual","Sick","Casual","Casual","Sick","Casual","Casual","Casual","Sick"];
-  var leavePeriod = ["Half Day","1 day","1 day","2 days","Half Day","1 day","1 day","1 day","2 days"];
-  var leaveReason = ["Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal"];
-  var applyTime = ["7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m."];
   final _formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return Material(
@@ -62,9 +54,13 @@ class _transferState extends State<transfer> {
                   ),
                 ],
               ), // Top icons
+
+
               const SizedBox(
                 height: 10,
               ),
+
+
               Flexible(
                 child: Padding (
                   padding: const EdgeInsets.only(left: 25,right: 15),
@@ -151,145 +147,6 @@ class _transferState extends State<transfer> {
                                               const SizedBox(
                                                 height: 20,
                                               ),
-                                              const SizedBox(
-                                                height: 50,
-                                              ),
-                                              Form(
-                                                  key: _formKey,
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      SizedBox(
-                                                        height: 100,
-                                                        child: Column(
-                                                          children: [
-                                                            Flexible(
-                                                              flex: 8,
-                                                              fit: FlexFit.tight,
-                                                              child: Container(
-                                                                  child: (
-                                                                      Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                                                        children: [
-                                                                          const Padding(
-                                                                            padding: EdgeInsets.only(left: 10),
-                                                                            child: Text("Employee Code *",
-                                                                              style: TextStyle(
-                                                                                  fontWeight: FontWeight.w500,
-                                                                                  fontSize: 17
-                                                                              ),),
-                                                                          ),
-                                                                          const SizedBox(
-                                                                            height: 4,
-                                                                          ),
-                                                                          SizedBox(
-                                                                            height: 50,
-                                                                            child: TextFormField(
-                                                                              validator: (value) {
-                                                                                if (value == null || value.isEmpty) {
-                                                                                  return 'Please enter some text';
-                                                                                }
-                                                                                return null;
-                                                                              },
-                                                                              controller: code,
-                                                                              keyboardType: TextInputType.number,
-                                                                              decoration: InputDecoration(
-                                                                                  hintText: "6 digit code",
-                                                                                  enabledBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(16),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: Color(0xFFD9D9D9),
-                                                                                        // width: 2
-                                                                                      )
-                                                                                  ),
-                                                                                  errorBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(30),
-                                                                                      borderSide: const BorderSide(
-                                                                                        color: Colors.red,
-                                                                                        // width: 2
-                                                                                      )
-                                                                                  ),
-                                                                                  focusedBorder: OutlineInputBorder(
-                                                                                      borderRadius: BorderRadius.circular(16),
-                                                                                      borderSide: const BorderSide(
-                                                                                          color: Colors.black,
-                                                                                          width: 2
-                                                                                      )
-                                                                                  )
-                                                                              ),
-                                                                            ),
-                                                                          )
-                                                                        ],
-                                                                      )
-                                                                  )
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ), // Email
-                                                      const SizedBox(
-                                                          height: 30
-                                                      ),
-                                                      InkWell(
-                                                        onTap: (){
-                                                          showDialog(
-                                                              context: context,
-                                                              builder: (context){
-                                                                return Container(
-                                                                  color: const Color.fromARGB(100, 22, 44, 33),
-                                                                  child: AlertDialog(
-                                                                    title: Text("Are you sure you want to transfer to $code?"),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                          onPressed: (){
-                                                                            Navigator.pop(context);
-                                                                            _transfer_leave(code.text);
-                                                                            showDialog(
-                                                                                context: context,
-                                                                                builder: (context){
-                                                                                  return Container(
-                                                                                    color: const Color.fromARGB(100, 22, 44, 33),
-                                                                                    child: AlertDialog(
-                                                                                      title: const Text("Transferred"),
-                                                                                      actions: [
-                                                                                        TextButton(
-                                                                                            onPressed: (){
-                                                                                              Navigator.pop(context);
-                                                                                              Navigator.pop(context);
-                                                                                            },
-                                                                                            child: const Text("Ok"))
-                                                                                      ],
-                                                                                    ),
-                                                                                  );
-                                                                                });
-                                                                          },
-                                                                          child: const Text("Yes")),
-                                                                      TextButton(
-                                                                          onPressed: (){
-                                                                            Navigator.pop(context);
-                                                                          },
-                                                                          child: const Text("No"))
-                                                                    ],
-                                                                  ),
-                                                                );
-                                                              });
-                                                        },
-                                                        child: Container(
-                                                          width: double.infinity,
-                                                          height: 40,
-                                                          decoration: BoxDecoration(
-                                                              color: const Color(0xFF2F3374),
-                                                              borderRadius: BorderRadius.circular(20)
-                                                          ),
-                                                          child: const Center(child: Text("Transfer", style: TextStyle(color: Colors.white, fontSize: 17,fontWeight: FontWeight.bold),),),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
                                             ],
                                           ),
                                         ),
@@ -298,6 +155,140 @@ class _transferState extends State<transfer> {
                                   }
                                   return Container();
                                 },
+                              ),
+
+
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 100,
+                                    child: Column(
+                                      children: [
+                                        Flexible(
+                                          flex: 8,
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                              child: (
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                                    children: [
+                                                      const Padding(
+                                                        padding: EdgeInsets.only(left: 10),
+                                                        child: Text("Employee Code *",
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.w500,
+                                                              fontSize: 17
+                                                          ),),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 4,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 50,
+                                                        child: TextFormField(
+                                                          validator: (value) {
+                                                            if (value == null || value.isEmpty) {
+                                                              return 'Please enter some text';
+                                                            }
+                                                            return null;
+                                                          },
+                                                          controller: code,
+                                                          keyboardType: TextInputType.number,
+                                                          decoration: InputDecoration(
+                                                              hintText: "6 digit code",
+                                                              enabledBorder: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(16),
+                                                                  borderSide: const BorderSide(
+                                                                    color: Color(0xFFD9D9D9),
+                                                                    // width: 2
+                                                                  )
+                                                              ),
+                                                              errorBorder: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(30),
+                                                                  borderSide: const BorderSide(
+                                                                    color: Colors.red,
+                                                                    // width: 2
+                                                                  )
+                                                              ),
+                                                              focusedBorder: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(16),
+                                                                  borderSide: const BorderSide(
+                                                                      color: Colors.black,
+                                                                      width: 2
+                                                                  )
+                                                              )
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                              )
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ), // Email
+                                  const SizedBox(
+                                      height: 30
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: (){
+                                  showDialog(
+                                      context: context,
+                                      builder: (context){
+                                        return Container(
+                                          color: const Color.fromARGB(100, 22, 44, 33),
+                                          child: AlertDialog(
+                                            title: Text("Are you sure you want to transfer to $code?"),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: (){
+                                                    Navigator.pop(context);
+                                                    print("sending");
+                                                    _transfer_leave(code.text.toString());
+                                                    print("sent");
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (context){
+                                                          return Container(
+                                                            color: const Color.fromARGB(100, 22, 44, 33),
+                                                            child: AlertDialog(
+                                                              title: const Text("Transferred"),
+                                                              actions: [
+                                                                TextButton(
+                                                                    onPressed: (){
+                                                                      Navigator.pop(context);
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                    child: const Text("Ok"))
+                                                              ],
+                                                            ),
+                                                          );
+                                                        });
+                                                  },
+                                                  child: const Text("Yes")),
+                                              TextButton(
+                                                  onPressed: (){
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text("No"))
+                                            ],
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFF2F3374),
+                                      borderRadius: BorderRadius.circular(20)
+                                  ),
+                                  child: const Center(child: Text("Transfer", style: TextStyle(color: Colors.white, fontSize: 17,fontWeight: FontWeight.bold),),),
+                                ),
                               ),
                             ],
                           )
@@ -342,12 +333,13 @@ class _transferState extends State<transfer> {
   }
 
   _transfer_leave(code) async{
+    print("called");
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     if(firebaseUser != null){
       await FirebaseFirestore.instance
           .collection("leave_application")
           .doc(leave_ind)
-          .update({"approver_OID":code.text});
+          .update({"approver_OID":code});
     }
   }
 }
