@@ -406,6 +406,24 @@ class _leave_requestState extends State<leave_request> {
                     child: InkWell(
                       onTap: (){
                         _apply_leave();
+                        showDialog(
+                            context: context,
+                            builder: (context){
+                              return Container(
+                                color: const Color.fromARGB(100, 22, 44, 33),
+                                child: AlertDialog(
+                                  title: const Text("Applied"),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: (){
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Ok"))
+                                  ],
+                                ),
+                              );
+                            });
                         },
                       child: const rdn_button(
                         BtnName: "Apply leave",

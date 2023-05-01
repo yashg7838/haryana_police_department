@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:haryana_police_department/screens/my_leaves.dart';
 import 'package:haryana_police_department/screens/to_approve.dart';
 import 'package:haryana_police_department/screens/to_approve_2.dart';
 import 'package:haryana_police_department/screens/your_leave.dart';
@@ -133,10 +134,10 @@ class _leaveState extends State<leave> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 25, right: 25),
-                          child: your_leave(),
+                          child: my_leaves(),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25, right: 25),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 25, right: 25),
                           child: SizedBox(
                             height: 200,
                               child: to_approve_2()

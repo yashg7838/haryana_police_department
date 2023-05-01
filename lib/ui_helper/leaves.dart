@@ -167,8 +167,24 @@ class RestService{
         myOID = ds.data();
       });
     }
-    // print(myOID);
+    print(myOID);
     return myOID;
+  }
+
+  static Future<List<Map<String, dynamic>>> getMyLeaves() async{
+    final firebaseUser = await FirebaseAuth.instance.currentUser!;
+    final List<Map<String, dynamic>> UIDs = [];
+    final collectionRef = FirebaseFirestore.instance.collection('leave_application');
+    final snapshot = await collectionRef.get();
+    final documents = snapshot.docs;
+
+    for (final doc in documents) {
+      if(doc.data()["applicant_uid"].toString() == firebaseUser.uid) {
+        UIDs.add(doc.data());
+      }
+    }
+    print(UIDs[0]["leave_id"]);
+    return UIDs;
   }
 
   static Future<List>  getleaveid() async {

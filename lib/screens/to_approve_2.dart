@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:haryana_police_department/screens/to_approve_user.dart';
-import 'notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:haryana_police_department/ui_helper/leaves.dart';

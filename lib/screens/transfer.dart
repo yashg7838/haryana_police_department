@@ -242,7 +242,7 @@ class _transferState extends State<transfer> {
                                         return Container(
                                           color: const Color.fromARGB(100, 22, 44, 33),
                                           child: AlertDialog(
-                                            title: Text("Are you sure you want to transfer to $code?"),
+                                            title: Text("Are you sure you want to transfer to ${code.text}?"),
                                             actions: [
                                               TextButton(
                                                   onPressed: (){
