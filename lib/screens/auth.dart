@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:haryana_police_department/screens/login.dart';
 import 'package:haryana_police_department/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:haryana_police_department/screens/web_login.dart';
 
 class Check extends StatelessWidget {
   const Check({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class Check extends StatelessWidget {
               return home();
             }
             else{
-              return login();
+              return web_login();
             }
           },),
         );
