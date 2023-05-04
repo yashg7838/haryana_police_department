@@ -16,7 +16,7 @@ class Check extends StatelessWidget {
               return home();
             }
             else{
-              return web_login();
+              return login();
             }
           },),
         );

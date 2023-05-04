@@ -324,8 +324,8 @@ class to_approve_userState extends State<to_approve_user> {
 
   _fetch_user() async{
     UIDs = await RestService.getthisUID(leave_ind);
-    print("object");
-    print(UIDs);
+    // print("object");
+    // print(UIDs);
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     if(firebaseUser != null){
       await FirebaseFirestore.instance

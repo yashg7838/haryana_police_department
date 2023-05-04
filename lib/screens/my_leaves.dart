@@ -21,10 +21,8 @@ class my_leavesstate extends State<my_leaves> {
   late final myOIDa;
   @override
   Widget build(BuildContext context) {
-    var leaveType = ["Casual","Sick","Casual","Casual","Sick","Casual","Casual","Casual","Sick"];
-    var leavePeriod = ["Half Day","1 day","1 day","2 days","Half Day","1 day","1 day","1 day","2 days"];
-    var leaveReason = ["Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal"];
-    var status = ["pending","Pending","approved","approved","denied","approved","denied","pending","Pending"];
+    double height = MediaQuery.of(context).size.height;
+    print(height);
 
     return Material(
         child: SingleChildScrollView(
@@ -158,15 +156,15 @@ class my_leavesstate extends State<my_leaves> {
 
   Future<List<Map<String, dynamic>>> _fetch_details() async {
     leaves = (await RestService.getMyLeaves())!;
-    print(leaves[0]["leave_id"]);
-    print("type:");
-    print(leaves[0]["leave_type"]);
-    print("Reason:");
-    print(leaves[0]["leave_reason"]);
-    print("Period:");
-    print(leaves[0]["leave_end"]);
-    print("Status:");
-    print(leaves[0]["status"]);
+    // print(leaves[0]["leave_id"]);
+    // print("type:");
+    // print(leaves[0]["leave_type"]);
+    // print("Reason:");
+    // print(leaves[0]["leave_reason"]);
+    // print("Period:");
+    // print(leaves[0]["leave_end"]);
+    // print("Status:");
+    // print(leaves[0]["status"]);
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     // print(leaves);
     return leaves;

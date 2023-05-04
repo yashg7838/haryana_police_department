@@ -15,16 +15,8 @@ class leave extends StatefulWidget {
 
 class _leaveState extends State<leave> {
   @override
-  var ID = ["1001","1002","1003","1004","1005","1006","1007","1008","1009","1010"];
-  var firstName = ['Manoj',"Sanjeev","Vineet","Mane","Ramanujan","Gopal","Harendar","Vinesh","Raghav","Dinesh"];
-  var lastName = ['Kumar',"Singh","Sharma","Milind","Govinda","Chand","Kumar","Mittal","Singh","Thappar"];
-  var position = ["ACP","SI Intelligence","ASI","Inspector","Inspector","Inspector","Inspector","Inspector","Inspector","Inspector"];
-  var leaveType = ["Casual","Sick","Casual","Casual","Sick","Casual","Casual","Casual","Sick","Casual"];
-  var leavePeriod = ["Half Day","1 day","1 day","2 days","Half Day","1 day","1 day","1 day","2 days","1 days"];
-  var leaveReason = ["Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal","Personal"];
-  var applyTime = ["7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m.","7:45 p.m."];
-  var leave_status = ["none","none","none","none","none","none","none","none","none","none"];
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(

@@ -41,9 +41,9 @@ class RestService{
     final firebaseUser = await FirebaseAuth.instance.currentUser!;
     final UIDs = await RestService.getUID();
     Map<String, dynamic>? myOID;
-    print("object");
-    print(UIDs);
-    print("object");
+    // print("object");
+    // print(UIDs);
+    // print("object");
 
     for(int i = 0; i < UIDs.length;i++){
       if (firebaseUser != null) {
@@ -65,7 +65,7 @@ class RestService{
     //     Names.add(doc.data()["name"].toString());
     //   }
     // }
-    print(Names);
+    // print(Names);
     return Names;
   }
 
@@ -100,7 +100,7 @@ class RestService{
     //     Posts.add(doc.data()["post"].toString());
     //   }
     // }
-    print(Posts);
+    // print(Posts);
     return Posts;
   }
 
@@ -119,7 +119,7 @@ class RestService{
         Leaves_ID.add(doc.data()["leave_id"].toString());
       }
     }
-    print(Leaves_ID);
+    // print(Leaves_ID);
     return Leaves_ID;
   }
 
@@ -167,7 +167,7 @@ class RestService{
         myOID = ds.data();
       });
     }
-    print(myOID);
+    // print(myOID);
     return myOID;
   }
 
@@ -183,7 +183,7 @@ class RestService{
         UIDs.add(doc.data());
       }
     }
-    print(UIDs[0]["leave_id"]);
+    // print(UIDs[0]["leave_id"]);
     return UIDs;
   }
 
